@@ -1,0 +1,32 @@
+{
+  "Name": "bad-bot-rate",
+  "Priority": 0,
+  "Action": {
+    "Block": {}
+  },
+  "VisibilityConfig": {
+    "SampledRequestsEnabled": true,
+    "CloudWatchMetricsEnabled": true,
+    "MetricName": "bad-bot-rate"
+  },
+  "Statement": {
+    "RateBasedStatement": {
+      "Limit": "250",
+      "AggregateKeyType": "IP",
+      "ScopeDownStatement": {
+        "NotStatement": {
+          "Statement": {
+            "IPSetReferenceStatement": {
+              "ARN": "arn:aws:wafv2:us-east-1:336735913602:global/ipset/bee-pro-net/9c8bd432-f089-48ae-b742-4707ed6ca960",
+              "IPSetForwardedIPConfig": {
+                "HeaderName": "X-Forwarded-For",
+                "FallbackBehavior": "NO_MATCH",
+                "Position": "ANY"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
